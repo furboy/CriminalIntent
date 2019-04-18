@@ -5,14 +5,14 @@ import java.util.UUID;
 
 public class Crime {
 
-    private UUID mId;
-    private String mTitle;
-    private Date mDate;
-    private boolean mSolved;
+    private UUID mId;       // the crime's unique ID
+    private String mTitle;  // title of the crime
+    private Date mDate;     // date of the crime
+    private boolean mSolved; // has the crime been solved?
 
     public Crime() {
-        mId = UUID.randomUUID();
-        mDate = new Date();
+        mId = UUID.randomUUID(); // automatically create a guaranteed-unique ID.
+        mDate = new Date();      // default the crime date to right now
     }
 
     public UUID getId() {

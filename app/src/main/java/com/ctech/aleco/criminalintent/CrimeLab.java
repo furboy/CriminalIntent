@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+// the com.ctech.bartucz.criminalintent.CrimeLab singleton class
 public class CrimeLab {
+
     private static CrimeLab sCrimeLab;
 
     private List<Crime> mCrimes;
@@ -15,7 +17,6 @@ public class CrimeLab {
         if (sCrimeLab == null) {
             sCrimeLab = new CrimeLab(context);
         }
-
         return sCrimeLab;
     }
 
@@ -24,7 +25,7 @@ public class CrimeLab {
         for (int i = 0; i < 100; i++) {
             Crime crime = new Crime();
             crime.setTitle("Crime #" + i);
-            crime.setSolved(i % 2 == 0);
+            crime.setSolved(i % 2 == 0); // every other one
             mCrimes.add(crime);
         }
     }
@@ -34,12 +35,13 @@ public class CrimeLab {
     }
 
     public Crime getCrime(UUID id) {
-        for (Crime crime : mCrimes) {
-            if (crime.getId().equals(id)) {
-                return crime;
+        for (Crime thisCrime : mCrimes) {
+            if (thisCrime.getId().equals(id)) {
+                return thisCrime;
             }
         }
 
         return null;
     }
 }
+
