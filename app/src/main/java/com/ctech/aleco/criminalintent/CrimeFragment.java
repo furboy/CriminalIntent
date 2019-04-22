@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -22,6 +23,8 @@ public class CrimeFragment extends Fragment {
 
     // This is a constant string we'll use to store and retrieve the crimeId from the bundle
     private static final String BUNDLE_CRIME_ID = "bundle_crime_id";
+
+    private static final String DIALOG_DATE = "dialog_date";
 
     private Crime mCrime;
     private EditText mTitleField;
@@ -76,7 +79,15 @@ public class CrimeFragment extends Fragment {
 
         mDateButton = v.findViewById(R.id.crime_date);
         mDateButton.setText(mCrime.getDate().toString());
-        mDateButton.setEnabled(false);
+        mDateButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+                    public void onClick(View
+            view){
+                FragmentManager manager = getFragmentManager();
+                DatePickerFragment dialog = new DatePickerFragment();
+                dialog.show(manager, DIALOG_DATE);
+            }
+        });
 
         mSolvedCheckBox = v.findViewById(R.id.crime_solved);
         mSolvedCheckBox.setChecked(mCrime.isSolved());
