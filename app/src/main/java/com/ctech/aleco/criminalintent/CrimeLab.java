@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import static com.ctech.aleco.criminalintent.database.CrimeDbSchema.*;
+
 // the com.ctech.bartucz.criminalintent.CrimeLab singleton class
 public class CrimeLab {
 
@@ -38,17 +40,17 @@ public class CrimeLab {
 
     public void addCrime(Crime c){
         ContentValues newValues = getContentValues(c);
-        mDatabase.insert(CrimeDbSchema.CrimeTable.NAME, null, newValues);
+        mDatabase.insert(CrimeTable.NAME, null, newValues);
     }
 
     public void updateCrime(Crime c){
         String crimeId = c.getId().toString();
         ContentValues newValues = getContentValues(c);
 
-        String searchString = CrimeDbSchema.CrimeTable.Columns.UUID + " = ?";
+        String searchString = CrimeTable.Columns.UUID + " = ?";
         String[] searchArgs = new String[] { crimeId };
 
-        mDatabase.update(CrimeDbSchema.CrimeTable.NAME, newValues, searchString, searchArgs);
+        mDatabase.update(CrimeTable.NAME, newValues, searchString, searchArgs);
     }
 
     public List<Crime> getCrimes() {
@@ -74,7 +76,8 @@ public class CrimeLab {
     public Crime getCrime(UUID id) {
         String[] searchArgs = new String[] {id.toString()};
 
-        CrimeCursorWrapper crimeCursor = queryCrimes(CrimeDbSchema.CrimeTable.Columns.UUID + " = ?", searchArgs);
+        CrimeCursorWrapper crimeCursor = queryCrimes(
+                CrimeTable.Columns.UUID + " = ?", searchArgs);
 
         try{
             if (crimeCursor.getCount()==0){
@@ -89,19 +92,19 @@ public class CrimeLab {
 
     }
 
-private static ContentValues getContentValues(Crime crime){
+    private static ContentValues getContentValues(Crime crime){
         ContentValues myContentValues = new ContentValues();
 
-    myContentValues.put(com.ctech.aleco.criminalintent.database.CrimeDbSchema.CrimeTable.Columns.UUID, crime.getId().toString());
-    myContentValues.put(com.ctech.aleco.criminalintent.database.CrimeDbSchema.CrimeTable.Columns.TITLE, crime.getTitle());
-    myContentValues.put(com.ctech.aleco.criminalintent.database.CrimeDbSchema.CrimeTable.Columns.DATE, crime.getDate().toString());
-    myContentValues.put(com.ctech.aleco.criminalintent.database.CrimeDbSchema.CrimeTable.Columns.SOLVED, crime.isSolved() ? 1:0);
+    myContentValues.put(CrimeTable.Columns.UUID, crime.getId().toString());
+    myContentValues.put(CrimeTable.Columns.TITLE, crime.getTitle());
+    myContentValues.put(CrimeTable.Columns.DATE, crime.getDate().getTime());
+    myContentValues.put(CrimeTable.Columns.SOLVED, crime.isSolved() ? 1:0);
 
     return  myContentValues;
     }
 
-private CrimeCursorWrapper queryCrimes(String whereClause, String[] whereArgs){
-        Cursor cursor = mDatabase.query(CrimeDbSchema.CrimeTable.NAME,null,whereClause,whereArgs,null,null,null);
+    private CrimeCursorWrapper queryCrimes(String whereClause, String[] whereArgs){
+        Cursor cursor = mDatabase.query(CrimeTable.NAME,null,whereClause,whereArgs,null,null,null);
         return new CrimeCursorWrapper(cursor);
 }
 
