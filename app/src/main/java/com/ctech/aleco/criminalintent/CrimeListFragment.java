@@ -49,6 +49,12 @@ public class CrimeListFragment extends Fragment {
     }
 
     @Override
+    public void onPause(){
+        super.onPause();
+        updateUI();
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_crime_list,menu);
@@ -71,11 +77,7 @@ public class CrimeListFragment extends Fragment {
                 startActivity(myIntent);
                 return true;
             case R.id.show_subtitle:
-                if (mSubtitleVisible){
-                    mSubtitleVisible = false;
-                }else{
-                    mSubtitleVisible = true;
-                }
+                mSubtitleVisible = !mSubtitleVisible;
                 getActivity().invalidateOptionsMenu();
                 updateSubtitle();
                 return true;

@@ -32,7 +32,7 @@ public class DatePickerFragment extends DialogFragment {
         return myFragment;
     }
 
-    View v = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_date,null);
+
 
     @Override
     @NonNull
@@ -46,8 +46,10 @@ public class DatePickerFragment extends DialogFragment {
         int month = myCalendar.get(Calendar.MONTH);
         int day = myCalendar.get(Calendar.DAY_OF_MONTH);
 
+        View v = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_date,null);
 
-        mDatePicker = (DatePicker) v.findViewById(R.id.dialog_date_picker);
+
+        mDatePicker = v.findViewById(R.id.dialog_date_picker);
         mDatePicker.init(year, month, day, null);
 
 
