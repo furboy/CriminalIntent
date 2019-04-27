@@ -9,6 +9,7 @@ import com.ctech.aleco.criminalintent.database.CrimeBaseHelper;
 import com.ctech.aleco.criminalintent.database.CrimeCursorWrapper;
 import com.ctech.aleco.criminalintent.database.CrimeDbSchema;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -51,6 +52,11 @@ public class CrimeLab {
         String[] searchArgs = new String[] { crimeId };
 
         mDatabase.update(CrimeTable.NAME, newValues, searchString, searchArgs);
+    }
+
+    public File getPhotoFile(Crime crime){
+        File filesDir = mContext.getFilesDir();
+        return new File(filesDir,crime.getPhotoFilename());
     }
 
     public List<Crime> getCrimes() {
@@ -99,6 +105,7 @@ public class CrimeLab {
     myContentValues.put(CrimeTable.Columns.TITLE, crime.getTitle());
     myContentValues.put(CrimeTable.Columns.DATE, crime.getDate().getTime());
     myContentValues.put(CrimeTable.Columns.SOLVED, crime.isSolved() ? 1:0);
+    myContentValues.put(CrimeTable.Columns.SUSPECT, crime.getmSuspect());
 
     return  myContentValues;
     }

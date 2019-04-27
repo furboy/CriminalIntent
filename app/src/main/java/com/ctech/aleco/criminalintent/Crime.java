@@ -10,6 +10,16 @@ public class Crime {
     private Date mDate;     // date of the crime
     private boolean mSolved; // has the crime been solved?
 
+    public String getmSuspect() {
+        return mSuspect;
+    }
+
+    public void setmSuspect(String mSuspect) {
+        this.mSuspect = mSuspect;
+    }
+
+    private String mSuspect;
+
     public Crime(UUID id) {
         mId = id; // automatically create a guaranteed-unique ID.
         mDate = new Date();      // default the crime date to right now
@@ -45,5 +55,11 @@ public class Crime {
 
     public void setSolved(boolean solved) {
         mSolved = solved;
+    }
+
+    public void setSuspect(String suspect) {mSuspect = suspect;}
+
+    public String getPhotoFilename(){
+        return "IMG_" + getId().toString() + ".jpg";
     }
 }
